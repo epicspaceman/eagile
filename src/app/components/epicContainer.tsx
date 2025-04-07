@@ -15,6 +15,9 @@ const EpicContainer = ({ epicId }: Props) => {
     const [collapsed, setCollapsed] = useState(true)
     const [contextMenuVisible, setContextMenuVisible] = useState(false)
 
+    const [menuOffsetY, setMenuOffsetY] = useState(0)
+    const [menuOffsetX, setMenuOffsetX] = useState(0)
+
     const fetchEpic = (): Promise<Epic> =>
         fetch(`api/epic/${epicId}`, {method: "GET"}).then((response) => response.json()).then((json) => {
             const { epic } = json
@@ -40,6 +43,9 @@ const EpicContainer = ({ epicId }: Props) => {
     const handleContextMenu = (e: MouseEvent<HTMLDivElement>) => {
         e.preventDefault()
         setContextMenuVisible(!contextMenuVisible)
+        
+        setMenuOffsetX(e.clientX)
+        setMenuOffsetY(e.clientY)
     }
 
     return(
@@ -51,7 +57,9 @@ const EpicContainer = ({ epicId }: Props) => {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                     </svg>
                 </button>
-                {contextMenuVisible && <EpicContextMenu data={data}/>}
+                {contextMenuVisible && (
+                    <EpicContextMenu data={data} isOpen={contextMenuVisible} coords={[menuOffsetX, menuOffsetY]}/>
+                )}
             </div>
             {!collapsed && <TicketBoard epicId={epicId} />}
         </div>
