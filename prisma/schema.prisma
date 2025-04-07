@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String?
+  password String
+  epics Epic[]
+  ticketsOwned Ticket[] @relation(name: "userTicketsOwned")
+  ticketsAssigned Ticket[] @relation(name: "userTicketsAssigned")
+}
+
+model Epic {
+  id        Int     @id @default(autoincrement())
+  title     String
+  tickets   Ticket[]
+  author    User    @relation(fields: [authorId], references: [id])
+  authorId  Int
+}
+
+model Ticket {
+  id        Int    @id @default(autoincrement())
+  title     String
+  description String
+  status    String
+  priority  String
+  epic      Epic   @relation(fields: [epicId], references: [id])
+  epicId    Int
+  author    User   @relation(fields: [authorId], references: [id], name: "userTicketsOwned")
+  authorId  Int
+  assignee   User   @relation(fields: [assigneeId], references: [id], name: "userTicketsAssigned")
+  assigneeId Int
+}
