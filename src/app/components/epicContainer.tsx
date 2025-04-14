@@ -40,16 +40,9 @@ const EpicContainer = ({ epicId }: Props) => {
 
     console.log(`data: ${data}`)
 
-    const handleContextMenu = (e: MouseEvent<HTMLDivElement>) => {
-        e.preventDefault()
-        setContextMenuVisible(!contextMenuVisible)
-        
-        setMenuOffsetX(e.clientX)
-        setMenuOffsetY(e.clientY)
-    }
 
     return(
-        <div className="w-full h-fit flex flex-col rounded-lg mt-3" onContextMenu={handleContextMenu}>
+        <div className="w-full h-fit flex flex-col rounded-lg mt-3">
             <div className="flex flex-row justify-between relative">
                 <button className="col-span-4 text-left text-gray-600" onClick={() => setCollapsed(!collapsed)}>{data.title}</button>
                 <button onClick={()=>setContextMenuVisible(!contextMenuVisible)}>
@@ -58,7 +51,7 @@ const EpicContainer = ({ epicId }: Props) => {
                     </svg>
                 </button>
                 {contextMenuVisible && (
-                    <EpicContextMenu data={data} isOpen={contextMenuVisible} coords={[menuOffsetX, menuOffsetY]}/>
+                    <EpicContextMenu data={data}/>
                 )}
             </div>
             {!collapsed && <TicketBoard epicId={epicId} />}
