@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Modal from "./modal"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import PrioritySelector from "./inputs/prioritySelector"
@@ -6,10 +6,26 @@ import { Ticket } from "@prisma/client"
 import StatusSelector from "./inputs/statusSelector"
 import DescriptionBox from "./inputs/descriptionBox"
 import TitleBox from "./inputs/titleBox"
+import { draggable } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
+import invariant from 'tiny-invariant';
 
 const TicketContainer = ({item}: { item: Ticket}) => {
     const queryClient = useQueryClient()
     const priority = item.priority.toUpperCase()
+
+    const ref = useRef(null)
+    const [dragging, setDragging] = useState<boolean>(false);
+
+    useEffect(() => {
+        const el = ref.current
+        invariant(el)
+
+        return draggable({
+            element: el,
+            onDragStart: () => setDragging(true),
+            onDrop: () => setDragging(false),
+        })
+    }, [])
 
     const [modalOpen, setModalOpen] = useState(false)
 
@@ -50,7 +66,7 @@ const TicketContainer = ({item}: { item: Ticket}) => {
 
     return (
         <div>
-            <button className="h-fit w-full border-2 rounded-lg bg-white p-3 text-left flex flex-col gap-y-4" onClick={() => setModalOpen(true)}>
+            <button className="h-fit w-full border-2 rounded-lg bg-white p-3 text-left flex-col gap-y-4" style={{ display: (!dragging ? "flex" : "none")}} ref={ref} onClick={() => setModalOpen(true)}>
                 <div>
                     <h1 className="text-lg">{item.title}</h1>
                     <p className="text-sm text-gray-500">{item.description}</p>
