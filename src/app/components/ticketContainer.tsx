@@ -22,10 +22,11 @@ const TicketContainer = ({item}: { item: Ticket}) => {
 
         return draggable({
             element: el,
+            getInitialData: () => ({ id: item.id }),
             onDragStart: () => setDragging(true),
             onDrop: () => setDragging(false),
         })
-    }, [])
+    }, [item])
 
     const [modalOpen, setModalOpen] = useState(false)
 
