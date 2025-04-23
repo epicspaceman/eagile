@@ -38,8 +38,6 @@ const EpicContainer = ({ epicId }: Props) => {
         return <span>Error: {error.message}</span>
     }
 
-    console.log(`data: ${data}`)
-
 
     return(
         <div className="w-full h-fit flex flex-col rounded-lg mt-3">

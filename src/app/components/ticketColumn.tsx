@@ -39,7 +39,7 @@ const TicketColumn = ({ tickets, epicId, status }: Props) => {
             onDragLeave: () => setIsDraggedOver(false),
             onDrop: ({ source }) => {
                 setIsDraggedOver(false);
-                if (typeof source.data.id != "number") {
+                if (typeof source.data.id != "number" || (status == source.data.status && epicId == source.data.epicId)) {
                     return;
                 };
                 updateTicket(source.data.id, JSON.stringify({ status, epicId }));

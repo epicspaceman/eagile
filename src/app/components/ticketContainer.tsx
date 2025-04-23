@@ -22,7 +22,7 @@ const TicketContainer = ({item}: { item: Ticket}) => {
 
         return draggable({
             element: el,
-            getInitialData: () => ({ id: item.id }),
+            getInitialData: () => ({ id: item.id, status: item.status, epicId: item.epicId }),
             onDragStart: () => setDragging(true),
             onDrop: () => setDragging(false),
         })

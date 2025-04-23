@@ -47,7 +47,6 @@ const TicketBoard = ({ epicId }: Props) => {
     if (isError) {
         return <span>Error: {error.message}</span>
     }
-    console.log(`data: ${data}`)
     return (
         <div className="grid grid-cols-4 gap-x-3">
             <TicketColumn tickets={todoTickets} status={"todo"} epicId={epicId}/>
