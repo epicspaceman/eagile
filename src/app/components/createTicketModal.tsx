@@ -2,13 +2,14 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import Modal from "./modal"
 import { Dispatch, SetStateAction, useState } from "react"
 import { Epic } from "@prisma/client"
+import { PublicUser } from "../lib/definitions"
 import EpicSelector from "./inputs/epicSelector"
 import PrioritySelector from "./inputs/prioritySelector"
 import StatusSelector from "./inputs/statusSelector"
 import DescriptionBox from "./inputs/descriptionBox"
 import TitleBox from "./inputs/titleBox"
 
-const CreateTicketModal = ({ isOpen, setOpen, epics, epic }: { isOpen: boolean, setOpen: Dispatch<SetStateAction<boolean>>, epics?: Epic[], epic?: Epic }) => {
+const CreateTicketModal = ({ isOpen, setOpen, user, epics, epic }: { isOpen: boolean, setOpen: Dispatch<SetStateAction<boolean>>, user: PublicUser, epics?: Epic[], epic?: Epic }) => {
     const queryClient = useQueryClient()
 
     const createTicket = async(formData: FormData) => {
@@ -24,7 +25,7 @@ const CreateTicketModal = ({ isOpen, setOpen, epics, epic }: { isOpen: boolean, 
           status,
           priority,
           epicId,
-          authorId: 1,
+          authorId: user.id,
         }))
         setOpen(false)
     }

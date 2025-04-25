@@ -54,9 +54,8 @@ export type SessionPayload =
      }
     | undefined
 
-export type User =
+export type PublicUser =
      {
-        id?: number
+        id: number
         username: string
-        password?: string
      }
