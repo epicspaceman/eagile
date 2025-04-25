@@ -3,8 +3,9 @@ import Modal from "./modal"
 import { Dispatch, SetStateAction, useState } from "react"
 import TitleBox from "./inputs/titleBox"
 import { Epic } from "@prisma/client"
+import { PublicUser } from "../lib/definitions"
 
-const EpicModal = ({ isOpen, setOpen, epic }: { isOpen: boolean, setOpen: Dispatch<SetStateAction<boolean>>, epic?: Epic }) => {
+const EpicModal = ({ isOpen, setOpen, epic, user }: { isOpen: boolean, setOpen: Dispatch<SetStateAction<boolean>>, epic?: Epic, user: PublicUser }) => {
     const queryClient = useQueryClient()
 
     const createEpic = async(formData: FormData) => {
@@ -12,7 +13,7 @@ const EpicModal = ({ isOpen, setOpen, epic }: { isOpen: boolean, setOpen: Dispat
     
         createMutation.mutate(JSON.stringify({
           title,
-          authorId: 1,
+          authorId: user.id,
         }))
         setOpen(false)
     }
@@ -44,7 +45,7 @@ const EpicModal = ({ isOpen, setOpen, epic }: { isOpen: boolean, setOpen: Dispat
     return (
         <Modal isOpen={isOpen}>
             <form className="flex flex-col gap-y-3 p-2">
-                <h1 className="text-xl">Create Epic</h1>
+                <h1 className="text-xl">{epic ? "Update" : "Create"} Epic</h1>
                 <TitleBox defaultTitle={epic?.title}/>
                 <div className="flex flex-row gap-x-3 justify-end">
                     <button className="w-fit h-fit bg-french-purple rounded-lg text-white p-3" onClick={()=>setOpen(false)}>Close</button>

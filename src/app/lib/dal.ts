@@ -4,7 +4,6 @@ import 'server-only'
 
 import { cookies } from 'next/headers'
 import { decrypt } from './session'
-import { redirect } from 'next/navigation'
 import { cache } from 'react'
 import { PrismaClient } from '@prisma/client'
 
@@ -15,7 +14,7 @@ export const verifySession = cache(async () => {
     const session = await decrypt(cookie)
 
     if (!session?.userId) {
-        redirect('/login')
+        return
     }
 
     return { isAuth: true, userId: session.userId}
