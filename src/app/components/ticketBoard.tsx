@@ -47,13 +47,12 @@ const TicketBoard = ({ epicId }: Props) => {
     if (isError) {
         return <span>Error: {error.message}</span>
     }
-    console.log(`data: ${data}`)
     return (
         <div className="grid grid-cols-4 gap-x-3">
-            <TicketColumn tickets={todoTickets} />
-            <TicketColumn tickets={blockedTickets} />
-            <TicketColumn tickets={inProgressTickets} />
-            <TicketColumn tickets={completedTickets} />
+            <TicketColumn tickets={todoTickets} status={"todo"} epicId={epicId}/>
+            <TicketColumn tickets={blockedTickets} status={"blocked"} epicId={epicId}/>
+            <TicketColumn tickets={inProgressTickets} status={"inProgress"} epicId={epicId}/>
+            <TicketColumn tickets={completedTickets} status={"completed"} epicId={epicId}/>
         </div>
     )
 }
