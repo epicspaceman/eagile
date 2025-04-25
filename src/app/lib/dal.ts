@@ -25,9 +25,11 @@ export const getUser = cache(async () => {
     const session = await verifySession()
     if (!session) return null
 
+    const id = Number(session.userId) 
+
     const user = await prisma.user.findUnique({
         where: {
-            id: session.userId as number
+            id
         },
         select: {
             id: true,

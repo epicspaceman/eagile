@@ -7,6 +7,7 @@ import { QueryClientProvider, useMutation, useQuery, useQueryClient } from "@tan
 import { Epic } from "@prisma/client"
 import CreateTicketModal from "./components/createTicketModal"
 import EpicModal from "./components/epicModal"
+import Navbar from "./components/navbar/navbar"
 
 export default function Home() {
   const queryClient = useQueryClient()
@@ -35,7 +36,7 @@ export default function Home() {
 
   return (
     <div className="h-screen font-[family-name:var(--font-geist-sans)]">
-      eagile
+      <Navbar />
       <div className="h-16 border-0 rounded-lg bg-gray-200 mx-3 flex flex-row gap-x-3 items-center p-2">
         <button className="w-fit h-fit bg-french-purple rounded-lg text-white p-3" onClick={()=>setEpicModalOpen(true)}>New Epic</button>
         <EpicModal isOpen={epicModalOpen} setOpen={setEpicModalOpen} />

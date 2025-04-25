@@ -1,11 +1,12 @@
-import styles from "./page.module.css"
 import LoginForm from '@/app/components/logInForm/loginForm'
+import Navbar from '../components/navbar/navbar'
 
 const LogIn = () => {
 
     return (
-        <main>
-            <div>
+        <main className='flex flex-col border-red-500 border-4 border-dotted h-screen w-full'>
+            <Navbar />
+            <div className='content-center justify-items-center border-red-500 border-4 border-dotted w-full h-full'>
                 <LoginForm />
             </div>
         </main>

@@ -56,7 +56,7 @@ export type SessionPayload =
 
 export type User =
      {
-        id?: string
+        id?: number
         username: string
         password?: string
      }

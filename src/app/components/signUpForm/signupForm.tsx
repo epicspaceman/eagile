@@ -2,6 +2,7 @@
 
 import { useActionState } from 'react'
 import { signup } from '@/app/actions/auth'
+import Link from 'next/link'
 
 const SignupForm = () => {
     const [state, action] = useActionState(signup, undefined)
@@ -35,6 +36,7 @@ const SignupForm = () => {
                 </div>
             </div>
             <button className='text-white bg-french-purple w-1/2 self-center rounded-lg mt-1 p-1' type="submit">Sign Up</button>
+            <Link className="text-center text-gray-500 text-sm" href={"/login"}>Already have an account? Log in.</Link>
         </form>
     )
 }
