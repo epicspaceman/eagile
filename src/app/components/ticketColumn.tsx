@@ -36,7 +36,7 @@ const TicketColumn = ({ tickets, epicId, status }: Props) => {
         return dropTargetForElements({
             element: el,
             onDragEnter: () => setIsDraggedOver(true),
-            onDragLeave: () => setIsDraggedOver(false),
+            onDragLeave: ({ source }) => setIsDraggedOver(false),
             onDrop: ({ source }) => {
                 setIsDraggedOver(false);
                 if (typeof source.data.id != "number" || (status == source.data.status && epicId == source.data.epicId)) {
