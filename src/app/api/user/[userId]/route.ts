@@ -14,8 +14,7 @@ export async function GET(
             },
             select: {
                 id: true,
-                name: true,
-                email: true,
+                username: true,
                 epics: true,
                 ticketsAssigned: true,
                 ticketsOwned: true
