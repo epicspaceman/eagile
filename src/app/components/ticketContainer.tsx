@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import Modal from "./modal"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import PrioritySelector from "./inputs/prioritySelector"
 import { Ticket } from "@prisma/client"
 import StatusSelector from "./inputs/statusSelector"
@@ -8,6 +8,9 @@ import DescriptionBox from "./inputs/descriptionBox"
 import TitleBox from "./inputs/titleBox"
 import { draggable } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import invariant from 'tiny-invariant';
+import UserIcon from "./userIcon"
+import { PublicUser } from "../lib/definitions"
+import UserSelector from "./inputs/userSelector"
 
 const TicketContainer = ({item}: { item: Ticket}) => {
     const queryClient = useQueryClient()
@@ -68,6 +71,17 @@ const TicketContainer = ({item}: { item: Ticket}) => {
         onSuccess: () => queryClient.invalidateQueries({ queryKey: ['tickets']})
     })
 
+    const fetchAssignee = (): Promise<PublicUser> =>
+        fetch(`api/user/${item.assigneeId}`, {method: "GET"}).then((response) => response.json()).then((json) => {
+            const { user } = json
+            return user
+        })
+
+    const { isPending, isError, data, error } = useQuery({
+        queryKey: ['user', item.assigneeId],
+        queryFn: fetchAssignee,
+    })
+
     return (
         <div>
             <button className="h-fit w-full border-2 rounded-lg bg-white p-3 text-left flex-col gap-y-4" style={{ display: (!dragging ? "flex" : "none")}} ref={ref} onClick={() => setModalOpen(true)}>
@@ -75,7 +89,14 @@ const TicketContainer = ({item}: { item: Ticket}) => {
                     <h1 className="text-lg">{item.title}</h1>
                     <p className="text-sm text-gray-500">{item.description}</p>
                 </div>
-                <div className="rounded-lg w-fit h-fit p-2 bg-french-purple text-white">{priority}</div>
+                <div className="flex flex-row justify-between">
+                    <div className="rounded-lg w-fit h-fit p-2 bg-french-purple text-white">{priority}</div>
+                    {
+                        !isPending && !isError && (
+                            <UserIcon name={data.username} />
+                        )
+                    }
+                </div>
             </button>
             <Modal isOpen={modalOpen}>
                 <form action={updateTicket} className="flex flex-col gap-y-3 p-2 text-left">
