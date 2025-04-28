@@ -1,19 +1,34 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import Modal from "./modal"
-import { Dispatch, SetStateAction, useState } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import TitleBox from "./inputs/titleBox"
 import { Epic } from "@prisma/client"
 import { PublicUser } from "../lib/definitions"
+import { getUser } from "../lib/dal"
 
-const EpicModal = ({ isOpen, setOpen, epic, user }: { isOpen: boolean, setOpen: Dispatch<SetStateAction<boolean>>, epic?: Epic, user: PublicUser }) => {
+const EpicModal = ({ isOpen, setOpen, epic }: { isOpen: boolean, setOpen: Dispatch<SetStateAction<boolean>>, epic?: Epic }) => {
     const queryClient = useQueryClient()
+
+    const [user, setUser] = useState<PublicUser>()
+    
+    useEffect(() => {
+        const fetchUser = async () => {
+            const data = await getUser() ?? undefined
+            console.log(data)
+            setUser(data)
+            console.log(user)
+        }
+
+        fetchUser()
+    }, [])
 
     const createEpic = async(formData: FormData) => {
         const title = formData.get("title")
+        const authorId = user === undefined ? 0 : user.id
     
         createMutation.mutate(JSON.stringify({
           title,
-          authorId: user.id,
+          authorId,
         }))
         setOpen(false)
     }

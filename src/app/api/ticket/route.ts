@@ -7,8 +7,9 @@ export async function POST(
 ) {
     try {
         const req = await request.json()
-        const {title, description, epicId, authorId, status, priority} = req
+        const {title, description, epicId, authorId, status, priority, assigneeId} = req
         console.log(req)
+        console.log(assigneeId)
         const ticket = await prisma.ticket.create({
             data: {
                 title,
@@ -17,7 +18,7 @@ export async function POST(
                 priority,
                 epicId,
                 authorId,
-                assigneeId: authorId,
+                assigneeId,
             },
         })
         return Response.json({ ticket })

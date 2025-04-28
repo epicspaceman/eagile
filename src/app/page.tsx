@@ -66,9 +66,9 @@ export default function Home() {
       <Navbar />
       <div className="h-16 border-0 rounded-lg bg-gray-200 mx-3 flex flex-row gap-x-3 items-center p-2">
         <button className="w-fit h-fit bg-french-purple rounded-lg text-white p-3" onClick={()=>setEpicModalOpen(true)}>New Epic</button>
-        <EpicModal isOpen={epicModalOpen} setOpen={setEpicModalOpen} user={user} />
+        <EpicModal isOpen={epicModalOpen} setOpen={setEpicModalOpen}/>
         <button className="w-fit h-fit bg-french-purple rounded-lg text-white p-3" onClick={()=>setTicketModalOpen(true)}>New Ticket</button>
-        <CreateTicketModal isOpen={ticketModalOpen} setOpen={setTicketModalOpen} epics={data} user={user}/>
+        <CreateTicketModal isOpen={ticketModalOpen} setOpen={setTicketModalOpen} epics={data}/>
       </div>
       <div className="w-full h-full grid grid-rows-[3rem_1fr] grid-cols-4 rounded-lg p-3 gap-x-3">
         <h1 className="w-full text-center content-center bg-french-purple text-white border-0 rounded-lg">To Do</h1>
