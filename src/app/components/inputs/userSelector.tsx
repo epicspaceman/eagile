@@ -1,9 +1,7 @@
 import { PublicUser } from "@/app/lib/definitions"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query"
 
 const UserSelector = ({ defaultUser }: { defaultUser?: PublicUser }) => {
-    const queryClient = useQueryClient()
-
     const fetchUsers = (): Promise<PublicUser[]> =>
         fetch(`api/user`, {method: "GET"}).then((response) => response.json()).then((json) => {
             const { users } = json

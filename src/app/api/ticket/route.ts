@@ -59,10 +59,16 @@ export async function GET() {
             }
         })
         return Response.json({ tickets })
-    } catch (err) {
+    } catch (e) {
+        let message = "Error reading from db"
+        if (typeof e === "string") {
+            message = e;
+        } else if (e instanceof Error) {
+            message = e.message;
+        }
         return new Response('Error', {
             status: 500,
-            headers: { error: 'Error reading from db'}
+            headers: { error: message}
         })
     }
 }

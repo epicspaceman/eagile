@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import Modal from "./modal"
-import { Dispatch, SetStateAction, useEffect, useState } from "react"
+import { Dispatch, SetStateAction } from "react"
 import { Ticket } from "@prisma/client"
 
-const WarningModal = ({ isOpen, setOpen, tickets, deleteEpic }: { isOpen: boolean, setOpen: Dispatch<SetStateAction<boolean>>, tickets: Ticket[], deleteEpic: Function}) => {
+const WarningModal = ({ isOpen, setOpen, tickets, deleteEpic }: { isOpen: boolean, setOpen: Dispatch<SetStateAction<boolean>>, tickets: Ticket[], deleteEpic: (ticketCount: number) => void}) => {
     const queryClient = useQueryClient()
 
     const deleteMutation = useMutation({

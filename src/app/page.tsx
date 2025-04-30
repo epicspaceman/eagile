@@ -1,9 +1,8 @@
 'use client'
 
 import { useEffect, useState } from "react"
-import Modal from "./components/modal"
 import EpicContainer from "./components/epicContainer"
-import { QueryClientProvider, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query"
 import { Epic } from "@prisma/client"
 import { PublicUser } from '@/app/lib/definitions'
 import CreateTicketModal from "./components/createTicketModal"
@@ -13,8 +12,6 @@ import { getUser } from "./lib/dal"
 import { redirect } from "next/navigation"
 
 export default function Home() {
-  const queryClient = useQueryClient()
-
   const [user, setUser] = useState<PublicUser>()
   const [ticketModalOpen, setTicketModalOpen] = useState(false)
   const [epicModalOpen, setEpicModalOpen] = useState(false)
@@ -34,7 +31,7 @@ export default function Home() {
       fetchUser()
 
       console.log(user)
-  }, [])
+  }, [user])
 
   const fetchEpics = (): Promise<Epic[]> =>
     fetch(`api/epic/`, {method: "GET"}).then((response) => response.json()).then((json) => {
@@ -76,7 +73,7 @@ export default function Home() {
         <h1 className="w-full text-center content-center bg-french-purple text-white rounded-lg">In Progress</h1>
         <h1 className="w-full text-center content-center bg-french-purple text-white rounded-lg">Completed</h1>
         <div className="col-span-4">
-          {data && data.map((item: any) => {
+          {data && data.map((item: Epic) => {
             return(
               <EpicContainer epicId={item.id} key={item.id} />
             )
