@@ -23,7 +23,7 @@ const UserSelector = ({ defaultUser }: { defaultUser?: PublicUser }) => {
 
     return (
         <div className="flex flex-col">
-            <label className="text-gray-500">Asignee</label>
+            <label className="text-gray-500">Assignee</label>
             <select className="bg-gray-200 p-1 rounded-lg" name="assignee" defaultValue={defaultUser?.username} required>
                 {data.length > 0 && data.map((user: PublicUser) => {
                     return (

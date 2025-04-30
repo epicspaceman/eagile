@@ -10,9 +10,12 @@ import EpicModal from "./components/epicModal"
 import Navbar from "./components/navbar/navbar"
 import { getUser } from "./lib/dal"
 import { redirect } from "next/navigation"
+import UserIcon from "./components/userIcon"
+import UserSelector from "./components/inputs/userSelector"
 
 export default function Home() {
   const [user, setUser] = useState<PublicUser>()
+  const [contextMenuVisible, setContextMenuVisible] = useState(false)
   const [ticketModalOpen, setTicketModalOpen] = useState(false)
   const [epicModalOpen, setEpicModalOpen] = useState(false)
   
@@ -44,7 +47,20 @@ export default function Home() {
       queryFn: fetchEpics,
   })
 
-  if (isPending) {
+  const fetchUsers = (): Promise<PublicUser[]> =>
+    fetch(`api/user/list/5`, {method: "GET"}).then((response) => response.json()).then((json) => {
+        const { users } = json
+        return users
+    })
+
+  const userQuery = useQuery({
+      queryKey: [`assignees`],
+      queryFn: fetchUsers,
+  })
+
+  const users = userQuery.data
+
+  if (isPending || userQuery.isPending) {
     return <span>Loading...</span>
   }
 
@@ -66,6 +82,22 @@ export default function Home() {
         <EpicModal isOpen={epicModalOpen} setOpen={setEpicModalOpen}/>
         <button className="w-fit h-fit bg-french-purple rounded-lg text-white p-3" onClick={()=>setTicketModalOpen(true)}>New Ticket</button>
         <CreateTicketModal isOpen={ticketModalOpen} setOpen={setTicketModalOpen} epics={data}/>
+        <div className="flex flex-row ml-5">
+            {users && users.map((user: any) => {
+                return(
+                    <div className="-ml-2" key={user.id}>
+                        <UserIcon name={user.username}/>
+                    </div>
+                )
+            })}
+            <button className="size-10 text-center content-center rounded-full bg-gray-400 text-white -ml-2" onClick={()=>setContextMenuVisible(!contextMenuVisible)}>?</button>
+            {contextMenuVisible && (
+                <div className="absolute right-[24rem] top-[6rem] z-10 w-fit h-fit border-red-500 border-2 border-dotted bg-black/50 flex flex-col rounded-b-lg rounded-r-lg gap-y-1 py-2">
+                    <UserSelector/>
+                    <div className="fixed border-red-500 border-2 border-dotted top-0 left-0 h-full w-full -z-10" onClick={() => setContextMenuVisible(false)}/>
+                </div>
+            )}
+        </div>
       </div>
       <div className="w-full h-full grid grid-rows-[3rem_1fr] grid-cols-4 rounded-lg p-3 gap-x-3">
         <h1 className="w-full text-center content-center bg-french-purple text-white border-0 rounded-lg">To Do</h1>
