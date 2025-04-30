@@ -34,7 +34,7 @@ export async function GET() {
             select: {
                 id: true,
                 username: true,
-            }
+            },
         })
         return Response.json({ users })
     } catch (err) {
