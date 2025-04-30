@@ -48,3 +48,12 @@ jobs:
         run: npx prisma generate
       - name: Build with Next.js
         run: npx next build
+        
+  deploy:
+    runs-on: self-hosted
+    needs: build
+    steps:
+      - name: Start server
+        run: npx next start
+  
+  
