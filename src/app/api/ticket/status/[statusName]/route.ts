@@ -20,7 +20,7 @@ export async function GET(
                 priority: true,
                 assignee: {
                     select: {
-                        name: true
+                        username: true
                     }
                 },
                 assigneeId: true,
