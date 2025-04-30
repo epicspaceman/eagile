@@ -1,15 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import Modal from "./modal"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import { Epic, Ticket } from "@prisma/client"
-import { PublicUser } from "../lib/definitions"
-import EpicSelector from "./inputs/epicSelector"
-import PrioritySelector from "./inputs/prioritySelector"
-import StatusSelector from "./inputs/statusSelector"
-import DescriptionBox from "./inputs/descriptionBox"
-import TitleBox from "./inputs/titleBox"
-import UserSelector from "./inputs/userSelector"
-import { getUser } from "../lib/dal"
+import { Ticket } from "@prisma/client"
 
 const WarningModal = ({ isOpen, setOpen, tickets, deleteEpic }: { isOpen: boolean, setOpen: Dispatch<SetStateAction<boolean>>, tickets: Ticket[], deleteEpic: Function}) => {
     const queryClient = useQueryClient()
