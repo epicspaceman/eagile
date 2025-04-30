@@ -5,6 +5,7 @@ import { getUser } from "@/app/lib/dal"
 import { PublicUser } from "@/app/lib/definitions"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import UserIcon from "../userIcon"
 
 const Navbar = () => {
     const [user, setUser] = useState<PublicUser>()
@@ -23,7 +24,8 @@ const Navbar = () => {
             <Link className="text-3xl text-french-purple" href='/'>Eagile</Link>
             {user !== undefined
             ? (
-                <div>
+                <div className="flex flex-row gap-3 items-center">
+                    <UserIcon name={user.username}/>
                     <button className="text-xl text-white bg-french-purple rounded-lg p-2" onClick={() => logout()}>Sign out</button>
                 </div>
             ) 

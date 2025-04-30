@@ -35,7 +35,7 @@ const UserIcon = ({ name }: Props) => {
     return(
         <div>
           <div
-           className="size-10 text-center content-center rounded-full text-white" 
+           className="size-10 text-center content-center rounded-full text-white cursor-default" 
            style={{ backgroundColor: (stringToColor(name)) }} 
            onMouseEnter={onMouseHover}
            onMouseLeave={() => {

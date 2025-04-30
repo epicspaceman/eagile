@@ -1,3 +1,4 @@
+import { Prisma, Ticket } from '@prisma/client'
 import { z } from 'zod'
 
 export const SignupFormSchema = z.object({
@@ -59,3 +60,5 @@ export type PublicUser =
         id: number
         username: string
      }
+
+export type TicketedEpic = Prisma.EpicGetPayload<{ include: { tickets: true } }>

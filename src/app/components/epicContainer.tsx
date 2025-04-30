@@ -6,6 +6,7 @@ import TicketBoard from "./ticketBoard"
 import EpicModal from "./epicModal"
 import CreateTicketModal from "./createTicketModal"
 import EpicContextMenu from "./epicContextMenu"
+import { TicketedEpic } from "../lib/definitions"
 
 type Props = {
     epicId: number
@@ -15,10 +16,7 @@ const EpicContainer = ({ epicId }: Props) => {
     const [collapsed, setCollapsed] = useState(true)
     const [contextMenuVisible, setContextMenuVisible] = useState(false)
 
-    const [menuOffsetY, setMenuOffsetY] = useState(0)
-    const [menuOffsetX, setMenuOffsetX] = useState(0)
-
-    const fetchEpic = (): Promise<Epic> =>
+    const fetchEpic = (): Promise<TicketedEpic> =>
         fetch(`api/epic/${epicId}`, {method: "GET"}).then((response) => response.json()).then((json) => {
             const { epic } = json
             return epic
@@ -48,9 +46,7 @@ const EpicContainer = ({ epicId }: Props) => {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                     </svg>
                 </button>
-                {contextMenuVisible && (
-                    <EpicContextMenu data={data}/>
-                )}
+                <EpicContextMenu data={data} isOpen={contextMenuVisible} setOpen={setContextMenuVisible}/>
             </div>
             {!collapsed && <TicketBoard epicId={epicId} />}
         </div>

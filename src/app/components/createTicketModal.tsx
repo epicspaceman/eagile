@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import Modal from "./modal"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import { Epic } from "@prisma/client"
+import { Epic, Ticket } from "@prisma/client"
 import { PublicUser } from "../lib/definitions"
 import EpicSelector from "./inputs/epicSelector"
 import PrioritySelector from "./inputs/prioritySelector"
@@ -10,7 +10,6 @@ import DescriptionBox from "./inputs/descriptionBox"
 import TitleBox from "./inputs/titleBox"
 import UserSelector from "./inputs/userSelector"
 import { getUser } from "../lib/dal"
-import { redirect } from "next/navigation"
 
 const CreateTicketModal = ({ isOpen, setOpen, epics, epic }: { isOpen: boolean, setOpen: Dispatch<SetStateAction<boolean>>, epics?: Epic[], epic?: Epic }) => {
     const queryClient = useQueryClient()
@@ -51,11 +50,15 @@ const CreateTicketModal = ({ isOpen, setOpen, epics, epic }: { isOpen: boolean, 
     }
     
     const mutation = useMutation({
-        mutationFn: (newTicket: string) => {
-            return fetch('api/ticket', {method: 'POST', body: newTicket})
+        mutationFn: (newTicket: string): Promise<Ticket> => {
+            return fetch('api/ticket', {method: 'POST', body: newTicket}).then((res) => res.json()).then((json) => {
+                const { ticket } = json
+                return ticket
+            })
         },
-        onSuccess: () => {
+        onSuccess: (ticket) => {
             queryClient.invalidateQueries({ queryKey: ['tickets']})
+            queryClient.invalidateQueries({ queryKey: ['epic', ticket.epicId]})
         }
     })
 
