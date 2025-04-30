@@ -1,4 +1,4 @@
-import { Prisma, Ticket } from '@prisma/client'
+import { Prisma } from '@prisma/client'
 import { z } from 'zod'
 
 export const SignupFormSchema = z.object({

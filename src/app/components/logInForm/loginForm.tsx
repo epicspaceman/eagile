@@ -27,7 +27,7 @@ const LoginForm = () => {
                 </div>                
             </div>
             <button className='text-white bg-french-purple w-1/2 self-center rounded-lg mt-1 p-1' type="submit">Log In</button>
-            <Link className="text-center text-gray-500 text-sm" href={"/signup"}>Don't have an account? Sign Up.</Link>
+            <Link className="text-center text-gray-500 text-sm" href={"/signup"}>Don&apost have an account? Sign Up.</Link>
         </form>
     )
 }

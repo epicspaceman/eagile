@@ -20,7 +20,7 @@ const EpicModal = ({ isOpen, setOpen, epic }: { isOpen: boolean, setOpen: Dispat
         }
 
         fetchUser()
-    }, [])
+    }, [user])
 
     const createEpic = async(formData: FormData) => {
         const title = formData.get("title")

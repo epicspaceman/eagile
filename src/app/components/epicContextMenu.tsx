@@ -1,4 +1,3 @@
-import { Epic } from "@prisma/client"
 import CreateTicketModal from "./createTicketModal"
 import EpicModal from "./epicModal"
 import { Dispatch, SetStateAction, useState } from 'react'

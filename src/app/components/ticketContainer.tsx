@@ -10,7 +10,6 @@ import { draggable } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import invariant from 'tiny-invariant';
 import UserIcon from "./userIcon"
 import { PublicUser } from "../lib/definitions"
-import UserSelector from "./inputs/userSelector"
 
 const TicketContainer = ({item}: { item: Ticket}) => {
     const queryClient = useQueryClient()
@@ -82,6 +81,12 @@ const TicketContainer = ({item}: { item: Ticket}) => {
         queryFn: fetchAssignee,
     })
 
+    if (isError) {
+        return (
+            <div>{error.message}</div>
+        )
+    }
+
     return (
         <div>
             <button className="h-fit w-full border-2 rounded-lg bg-white p-3 text-left flex-col gap-y-4" style={{ display: (!dragging ? "flex" : "none")}} ref={ref} onClick={() => setModalOpen(true)}>
@@ -92,7 +97,7 @@ const TicketContainer = ({item}: { item: Ticket}) => {
                 <div className="flex flex-row justify-between">
                     <div className="rounded-lg w-fit h-fit p-2 bg-french-purple text-white">{priority}</div>
                     {
-                        !isPending && !isError && (
+                        !isPending && (
                             <UserIcon name={data.username} />
                         )
                     }

@@ -1,5 +1,4 @@
 import { PrismaClient } from '@prisma/client'
-import { preloadStyle } from 'next/dist/server/app-render/entry-base'
 
 const prisma = new PrismaClient()
 
