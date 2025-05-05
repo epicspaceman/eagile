@@ -11,6 +11,7 @@ const prisma = new PrismaClient()
 
 export const verifySession = cache(async () => {
     const cookie = (await cookies()).get('session')?.value
+    console.log("Sending cookies: ", cookie)
     const session = await decrypt(cookie)
 
     if (!session?.userId) {
