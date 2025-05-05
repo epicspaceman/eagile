@@ -58,5 +58,5 @@ jobs:
         with:
           node-version: "20"
           cache: npm
-      - name: Start server
-        run: npx next start
+      - name: Reload app
+        run: npx pm2 reload eagile
