@@ -13,6 +13,7 @@ const LoginForm = () => {
                 <h1 className='text-5xl text-french-purple text-center'>Eagile</h1>
                 <p className='text-s text-gray-500 text-center'>Become an agile eagle</p>
             </div>
+            <p>{state?.message}</p>
             <div className='flex flex-col gap-5'>
                 <div className='flex flex-col'>
                     <label className='text-gray-500'>Username</label>

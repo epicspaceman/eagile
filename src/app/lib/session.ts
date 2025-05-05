@@ -32,8 +32,6 @@ export async function createSession(userId: string) {
     const session = await encrypt({ userId, expiresAt })
     const cookieStore = await cookies()
 
-    console.log("checkpoint2")
-
     cookieStore.set('session', session, {
         httpOnly: true,
         secure: true,
@@ -41,8 +39,6 @@ export async function createSession(userId: string) {
         sameSite: 'lax',
         path: '/'
     })
-
-    console.log("checkpoint3")
 }
 
 export async function deleteSession() {
