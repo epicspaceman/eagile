@@ -21,11 +21,10 @@ const CreateTicketModal = ({ isOpen, setOpen, epics, epic }: { isOpen: boolean, 
             const data = await getUser() ?? undefined
             console.log(data)
             setUser(data)
-            console.log(user)
         }
 
         fetchUser()
-    }, [user])
+    }, [])
 
     const createTicket = async(formData: FormData) => {
         const title = formData.get("title")
