@@ -21,7 +21,6 @@ export default function Home() {
           const data = await getUser() ?? undefined
           console.log(data)
           setUser(data)
-          console.log(user)
 
           if (data === undefined) {
             redirect('/login')
@@ -29,9 +28,7 @@ export default function Home() {
       }
 
       fetchUser()
-
-      console.log(user)
-  }, [user])
+  }, [])
 
   const fetchEpics = (): Promise<Epic[]> =>
     fetch(`api/epic/`, {method: "GET"}).then((response) => response.json()).then((json) => {
