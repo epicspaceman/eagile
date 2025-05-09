@@ -82,18 +82,21 @@ export default function Home() {
         <div className="flex flex-row ml-5">
             {users && users.map((user: any) => {
                 return(
-                    <div className="-ml-2" key={user.id}>
+                    <button className="-ml-2 border-red-500 border-2 border-dotted " onClick={()=>console.log(`clicked ${user.username}`)}key={user.id}>
                         <UserIcon name={user.username}/>
-                    </div>
+                    </button>
                 )
             })}
-            <button className="size-10 text-center content-center rounded-full bg-gray-400 text-white -ml-2" onClick={()=>setContextMenuVisible(!contextMenuVisible)}>?</button>
-            {contextMenuVisible && (
-                <div className="absolute right-[24rem] top-[6rem] z-10 w-fit h-fit border-red-500 border-2 border-dotted bg-black/50 flex flex-col rounded-b-lg rounded-r-lg gap-y-1 py-2">
-                    <UserSelector/>
-                    <div className="fixed border-red-500 border-2 border-dotted top-0 left-0 h-full w-full -z-10" onClick={() => setContextMenuVisible(false)}/>
-                </div>
-            )}
+            <div className=" border-red-500 border-2 border-dotted ">
+                <button className=" border-red-500 border-2 border-dotted size-10 text-center content-center rounded-full bg-gray-400 text-white -ml-2" onClick={()=>setContextMenuVisible(!contextMenuVisible)}>?</button>
+                {contextMenuVisible && (
+                    <div className="fixed z-10 w-fit h-fit border-red-500 border-2 border-dotted bg-black/50 flex flex-col rounded-b-lg rounded-r-lg gap-y-1 py-2"
+                        style={{ transform: "translateX(min(var(--mouse-x), calc(100vw - 100%))) translateY(min(var(--mouse-y), calc(100vh - 100%)))"}}>
+                        <UserSelector defaultUser={user}/>
+                        <div className="fixed border-red-500 border-2 border-dotted top-0 left-0 h-full w-full -z-10" onClick={() => setContextMenuVisible(false)}/>
+                    </div>
+                )}
+            </div>
         </div>
       </div>
       <div className="w-full h-full grid grid-rows-[3rem_1fr] grid-cols-4 rounded-lg p-3 gap-x-3">

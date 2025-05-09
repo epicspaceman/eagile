@@ -65,6 +65,6 @@ export type TicketedEpic = Prisma.EpicGetPayload<{ include: { tickets: true } }>
 
 export type TicketFilter = 
     {
-        userId: number
+        user: PublicUser
         priority: string
     }
