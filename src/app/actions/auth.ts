@@ -58,7 +58,6 @@ export async function login(state: LoginFormState, formData: FormData) {
         }
     }
 
-    console.log("b4 primsa")
     const user = await prisma.user.findUnique({
         where: {
             username: validatedFields.data.username,
@@ -69,7 +68,6 @@ export async function login(state: LoginFormState, formData: FormData) {
         }
     })
 
-    console.log("after primsa")
     if (user == null) {
         return {
             message: "Could not find user."
@@ -77,8 +75,6 @@ export async function login(state: LoginFormState, formData: FormData) {
     }
 
     const validPass: boolean = await bcrypt.compare(validatedFields.data.password, user.password)
-
-    console.log(validPass)
 
     if (!validPass) {
         return {
