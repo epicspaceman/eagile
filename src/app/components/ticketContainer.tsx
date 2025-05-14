@@ -91,8 +91,8 @@ const TicketContainer = ({item}: { item: Ticket}) => {
         <div>
             <button className="h-fit w-full border-2 rounded-lg bg-white p-3 text-left flex-col gap-y-4" style={{ display: (!dragging ? "flex" : "none")}} ref={ref} onClick={() => setModalOpen(true)}>
                 <div>
-                    <h1 className="text-lg">{item.title}</h1>
-                    <p className="text-sm text-gray-500">{item.description}</p>
+                    <h1 className="text-lg text-wrap overflow-hidden">{item.title}</h1>
+                    <p className="text-sm text-gray-500 text-wrap overflow-hidden">{item.description}</p>
                 </div>
                 <div className="flex flex-row justify-between">
                     <div className="rounded-lg w-fit h-fit p-2 bg-french-purple text-white">{priority}</div>
