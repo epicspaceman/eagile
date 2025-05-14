@@ -36,7 +36,10 @@ const EpicContainer = ({ epicId }: Props) => {
     return(
         <div className="w-full h-fit flex flex-col rounded-lg mt-3">
             <div className="flex flex-row justify-between relative">
-                <button className="col-span-4 text-left text-gray-600" onClick={() => setCollapsed(!collapsed)}>{data.title}</button>
+                <button className="col-span-4 text-left text-gray-600 flex flex-row" onClick={() => setCollapsed(!collapsed)}>
+                    {collapsed ? <img className="opacity-45 h-3/4 self-center" src='/assets/chevron-right.svg'/> : <img className="opacity-45 h-3/4 self-center" src='/assets/chevron-down.svg'/>}
+                    {data.title}
+                </button>
                 <button onClick={()=>setContextMenuVisible(!contextMenuVisible)}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />

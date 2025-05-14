@@ -72,7 +72,7 @@ const CreateTicketModal = ({ isOpen, setOpen, epics, epic }: { isOpen: boolean, 
                 <UserSelector />
                 { epics && <EpicSelector epics={epics} /> }
                 <div className="flex flex-row gap-x-3 justify-end">
-                    <button className="w-fit h-fit bg-french-purple rounded-lg text-white p-3" onClick={()=>setOpen(false)}>Close</button>
+                    <button type='button' className="w-fit h-fit bg-french-purple rounded-lg text-white p-3" onClick={()=>setOpen(false)}>Close</button>
                     <button type="submit" className="w-fit h-fit bg-french-purple rounded-lg text-white p-3">Create</button>
                 </div>
             </form>
