@@ -25,13 +25,15 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: npm
+      - name: Stop current deployment
+        run: npx pm2 stop eagile
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Restore cache
         uses: actions/cache@v4
         with:
@@ -59,4 +61,4 @@ jobs:
           node-version: "20"
           cache: npm
       - name: Reload app
-        run: npx pm2 reload eagile
+        run: npx pm2 restart eagile
