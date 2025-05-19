@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import EpicContainer from "./components/epicContainer"
 import { useQuery } from "@tanstack/react-query"
 import { Epic } from "@prisma/client"
-import { PublicUser } from '@/app/lib/definitions'
+import { PublicUser, TicketFilter } from '@/app/lib/definitions'
 import CreateTicketModal from "./components/createTicketModal"
 import EpicModal from "./components/epicModal"
 import Navbar from "./components/navbar/navbar"
@@ -18,6 +18,7 @@ export default function Home() {
   const [contextMenuVisible, setContextMenuVisible] = useState(false)
   const [ticketModalOpen, setTicketModalOpen] = useState(false)
   const [epicModalOpen, setEpicModalOpen] = useState(false)
+  const [ticketFilter, setTicketFilter] = useState<TicketFilter>({})
   
   useEffect(() => {
       const fetchUser = async () => {
@@ -82,7 +83,11 @@ export default function Home() {
         <div className="flex flex-row ml-5">
             {users && users.map((user: any) => {
                 return(
-                    <button className="-ml-2 border-red-500 border-2 border-dotted " onClick={()=>console.log(`clicked ${user.username}`)}key={user.id}>
+                    <button className="-ml-2 border-red-500 border-2 border-dotted " onClick={()=>{
+                        console.log(`clicked on ${user.username}`)
+                        setTicketFilter(ticketFilter => ({...ticketFilter, ...{user: user}}))
+                        console.log(ticketFilter)
+                    }}key={user.id}>
                         <UserIcon name={user.username}/>
                     </button>
                 )
@@ -107,7 +112,7 @@ export default function Home() {
         <div className="col-span-4">
           {data && data.map((item: Epic) => {
             return(
-              <EpicContainer epicId={item.id} key={item.id} />
+              <EpicContainer epicId={item.id} ticketFilter={ticketFilter} key={item.id} />
             )
           })}
         </div>

@@ -4,14 +4,16 @@ import { dropTargetForElements } from '@atlaskit/pragmatic-drag-and-drop/element
 import invariant from "tiny-invariant";
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { Ticket } from "@prisma/client";
+import { TicketFilter } from "../lib/definitions";
 
 type Props = {
     tickets: Ticket[],
     epicId: number,
     status: string
+    ticketFilter: TicketFilter
 }
 
-const TicketColumn = ({ tickets, epicId, status }: Props) => {
+const TicketColumn = ({ tickets, epicId, status, ticketFilter }: Props) => {
     const queryClient = useQueryClient();
     const ref = useRef(null);
     const [isDraggedOver, setIsDraggedOver] = useState(false);
