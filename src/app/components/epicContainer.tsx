@@ -2,13 +2,14 @@ import { useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import TicketBoard from "./ticketBoard"
 import EpicContextMenu from "./epicContextMenu"
-import { TicketedEpic } from "../lib/definitions"
+import { TicketedEpic, TicketFilter } from "../lib/definitions"
 
 type Props = {
     epicId: number
+    ticketFilter: TicketFilter
 }
 
-const EpicContainer = ({ epicId }: Props) => {
+const EpicContainer = ({ epicId, ticketFilter }: Props) => {
     const [collapsed, setCollapsed] = useState(true)
     const [contextMenuVisible, setContextMenuVisible] = useState(false)
 
@@ -44,7 +45,7 @@ const EpicContainer = ({ epicId }: Props) => {
                 </button>
                 <EpicContextMenu data={data} isOpen={contextMenuVisible} setOpen={setContextMenuVisible}/>
             </div>
-            {!collapsed && <TicketBoard epicId={epicId} />}
+            {!collapsed && <TicketBoard epicId={epicId} ticketFilter={ticketFilter} />}
         </div>
     )
 }
