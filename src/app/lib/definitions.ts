@@ -1,6 +1,7 @@
 import { Prisma } from '@prisma/client'
 import { z } from 'zod'
 
+// Sign up form rules
 export const SignupFormSchema = z.object({
     username: z
         .string()
@@ -17,6 +18,7 @@ export const SignupFormSchema = z.object({
         .trim(),
 })
 
+// Log in form rules
 export const LoginFormSchema = z.object({
     username: z
         .string()
@@ -55,10 +57,12 @@ export type SessionPayload =
      }
     | undefined
 
+// Basically just a User object but without the password; a user object that can be exposed to any end user0
 export type PublicUser =
      {
         id: number
         username: string
      }
 
+// Epic object with a ticket array
 export type TicketedEpic = Prisma.EpicGetPayload<{ include: { tickets: true } }>

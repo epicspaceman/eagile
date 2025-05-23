@@ -9,6 +9,7 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
+// grab session from cookies, decrypt it, then verify that it contains a user id
 export const verifySession = cache(async () => {
     const cookie = (await cookies()).get('session')?.value
     const session = await decrypt(cookie)
@@ -20,6 +21,7 @@ export const verifySession = cache(async () => {
     return { isAuth: true, userId: session.userId}
 })
 
+// verify session, fetch user, return user
 export const getUser = cache(async () => {
     const session = await verifySession()
     if (!session) return null
@@ -37,9 +39,4 @@ export const getUser = cache(async () => {
     })
 
     return user
-})
-
-export const sessionExists = cache(async () =>{
-    const cookieStore = await cookies()
-    return cookieStore.has('session')
 })

@@ -25,10 +25,13 @@ const WarningModal = ({ isOpen, setOpen, tickets, deleteEpic }: { isOpen: boolea
 
     return (
         <Modal isOpen={isOpen}>
-            <div>
-                <div>you have {tickets.length} tickets do you want to delete them?</div>
-                <button onClick={() => deleteAllTickets()}>yes</button>
-                <button onClick={() => setOpen(false)}>no</button>
+            <div className="flex flex-col p-2">
+                <h1 className="text-2xl">Delete Epic</h1>
+                <p className="text-base text-gray-500">You have {tickets.length} ticket{tickets.length > 1 ? 's' : ''}. Are you sure you want to delete them?</p>
+                <div className="flex flex-row gap-3 justify-end mt-3">
+                    <button type="submit" className="w-fit h-fit bg-red-500 rounded-lg text-white p-3" onClick={() => deleteAllTickets()}>Delete</button>
+                    <button type="button" className="w-fit h-fit bg-french-purple rounded-lg text-white p-3" onClick={() => setOpen(false)}>Cancel</button>
+                </div>
             </div>
         </Modal>
     )
