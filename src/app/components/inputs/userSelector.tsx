@@ -1,7 +1,14 @@
-import { PublicUser } from "@/app/lib/definitions"
+import { PublicUser, TicketFilter } from "@/app/lib/definitions"
 import { useQuery } from "@tanstack/react-query"
 
-const UserSelector = ({ defaultUser }: { defaultUser?: PublicUser }) => {
+type Props = {
+    defaultUser?: PublicUser,
+    updateTicketFilter?: ({ user, priority, clearUser }: { user?: PublicUser, priority?: string, clearUser?: boolean }) => void,
+    ticketFilter?: TicketFilter
+}
+
+const UserSelector = ({ defaultUser, updateTicketFilter, ticketFilter }: Props) => {
+
     const fetchUsers = (): Promise<PublicUser[]> =>
         fetch(`api/user`, {method: "GET"}).then((response) => response.json()).then((json) => {
             const { users } = json
@@ -23,11 +30,20 @@ const UserSelector = ({ defaultUser }: { defaultUser?: PublicUser }) => {
 
     return (
         <div className="flex flex-col">
-            <label className="text-gray-500">Asignee</label>
-            <select className="bg-gray-200 p-1 rounded-lg" name="assignee" defaultValue={defaultUser?.username} required>
+            {!ticketFilter && (<label className="text-gray-500">Assignee</label>)}
+            <select className="bg-gray-200 p-1 rounded-lg" name="assignee" defaultValue={ticketFilter?.user ? JSON.stringify(defaultUser) : "None"} onChange={(event) => {
+                if (updateTicketFilter) {
+                    if (event.target.value != "All") {
+                        updateTicketFilter({ user: JSON.parse(event.target.value) })
+                    } else {
+                        updateTicketFilter({ clearUser: true })
+                    }
+                }
+            }} required>
+                {ticketFilter && (<option value="All">All Users</option>)}
                 {data.length > 0 && data.map((user: PublicUser) => {
                     return (
-                        <option value={user.id} key={user.id}>{user.username}</option>
+                        <option value={JSON.stringify(user)} key={user.id}>{user.username}</option>
                     )
                 })}
             </select>

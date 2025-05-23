@@ -66,3 +66,9 @@ export type PublicUser =
 
 // Epic object with a ticket array
 export type TicketedEpic = Prisma.EpicGetPayload<{ include: { tickets: true } }>
+
+export type TicketFilter = 
+    {
+        user?: PublicUser
+        priority?: string
+    }
