@@ -1,14 +1,28 @@
 import { Ticket } from "@prisma/client"
 import { useQuery } from "@tanstack/react-query"
 import TicketColumn from "./ticketColumn"
+import { TicketFilter } from "../lib/definitions"
 
 type Props = {
     epicId: number
+    ticketFilter: TicketFilter
 }
 
-const TicketBoard = ({ epicId }: Props) => {
+const constructUrl = (epicId: number, ticketFilter: TicketFilter): string => {
+    let url = `api/ticket/epic/${epicId}`
+    if (ticketFilter.user) {
+        url += `/user/${ticketFilter.user.id}`
+    }
+    if (ticketFilter.priority) {
+        url += `/priority/${ticketFilter.priority}`
+    }
+
+    return url
+}
+
+const TicketBoard = ({ epicId, ticketFilter }: Props) => {
     const fetchTickets = (): Promise<Ticket[]> =>
-        fetch(`api/ticket/epic/${epicId}`, {method: "GET"}).then((response) => response.json()).then((json) => {
+        fetch(constructUrl(epicId, ticketFilter), {method: "GET"}).then((response) => response.json()).then((json) => {
             const { tickets } = json
             return tickets
         })
@@ -49,10 +63,10 @@ const TicketBoard = ({ epicId }: Props) => {
     }
     return (
         <div className="grid grid-cols-4 gap-x-3">
-            <TicketColumn tickets={todoTickets} status={"todo"} epicId={epicId}/>
-            <TicketColumn tickets={blockedTickets} status={"blocked"} epicId={epicId}/>
-            <TicketColumn tickets={inProgressTickets} status={"inProgress"} epicId={epicId}/>
-            <TicketColumn tickets={completedTickets} status={"completed"} epicId={epicId}/>
+            <TicketColumn tickets={todoTickets} status={"todo"} epicId={epicId} ticketFilter={ticketFilter}/>
+            <TicketColumn tickets={blockedTickets} status={"blocked"} epicId={epicId} ticketFilter={ticketFilter}/>
+            <TicketColumn tickets={inProgressTickets} status={"inProgress"} epicId={epicId} ticketFilter={ticketFilter}/>
+            <TicketColumn tickets={completedTickets} status={"completed"} epicId={epicId} ticketFilter={ticketFilter}/>
         </div>
     )
 }
