@@ -43,7 +43,7 @@ const UserSelector = ({ defaultUser, updateTicketFilter, ticketFilter }: Props) 
                 {ticketFilter && (<option value="All">All Users</option>)}
                 {data.length > 0 && data.map((user: PublicUser) => {
                     return (
-                        <option value={JSON.stringify(user)} key={user.id}>{user.username}</option>
+                        <option value={(ticketFilter ? JSON.stringify(user) : user.id)} key={user.id}>{user.username}</option>
                     )
                 })}
             </select>
