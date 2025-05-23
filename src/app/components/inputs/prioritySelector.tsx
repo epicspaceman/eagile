@@ -1,4 +1,4 @@
-import { TicketFilter } from "@/app/lib/definitions"
+import { PublicUser, TicketFilter } from "@/app/lib/definitions"
 
 type Props = {
     defaultPriority?: string,
