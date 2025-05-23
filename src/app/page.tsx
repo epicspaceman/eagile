@@ -101,7 +101,7 @@ export default function Home() {
         <button className="w-fit h-fit bg-french-purple rounded-lg text-white p-3" onClick={()=>setTicketModalOpen(true)}>New Ticket</button>
         <CreateTicketModal isOpen={ticketModalOpen} setOpen={setTicketModalOpen} epics={data}/>
         <div className="flex flex-row ml-5">
-            {users && users.map((user: any) => {
+            {users && users.map((user: PublicUser) => {
                 return(
                     <button className="border-white border-2 rounded-full -ml-2" 
                         style={{ borderColor: ((ticketFilter.user && ticketFilter.user.id == user.id) ? "black" : "white") }}

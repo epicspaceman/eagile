@@ -1,15 +1,13 @@
 import { PublicUser, TicketFilter } from "@/app/lib/definitions"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { Dispatch, SetStateAction } from "react"
+import { useQuery } from "@tanstack/react-query"
 
 type Props = {
     defaultUser?: PublicUser,
-    updateTicketFilter?: Function,
+    updateTicketFilter?: ({ user, priority, clearUser }: { user?: PublicUser, priority?: string, clearUser?: boolean }) => void,
     ticketFilter?: TicketFilter
 }
 
 const UserSelector = ({ defaultUser, updateTicketFilter, ticketFilter }: Props) => {
-    const queryClient = useQueryClient()
 
     const fetchUsers = (): Promise<PublicUser[]> =>
         fetch(`api/user`, {method: "GET"}).then((response) => response.json()).then((json) => {
