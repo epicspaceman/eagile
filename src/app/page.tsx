@@ -24,7 +24,7 @@ export default function Home() {
   const [epicModalOpen, setEpicModalOpen] = useState(false)
   const [ticketFilter, setTicketFilter] = useState<TicketFilter>({})
 
-  const updateTicketFilter = ({ user, priority, clearUser }: { user?: PublicUser, priority?: string, clearUser: boolean }) => {
+  const updateTicketFilter = ({ user, priority, clearUser }: { user?: PublicUser, priority?: string, clearUser?: boolean }) => {
     flushSync(() => {
         if (user) {
             setTicketFilter(ticketFilter => ({...ticketFilter, ...{user: (((ticketFilter.user?.id != user.id)) ? user : undefined)}}))

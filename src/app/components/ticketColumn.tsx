@@ -10,9 +10,10 @@ type Props = {
     tickets: Ticket[],
     epicId: number,
     status: string
+    ticketFilter: TicketFilter
 }
 
-const TicketColumn = ({ tickets, epicId, status }: Props) => {
+const TicketColumn = ({ tickets, epicId, status, ticketFilter }: Props) => {
     const queryClient = useQueryClient();
     const ref = useRef(null);
     const [isDraggedOver, setIsDraggedOver] = useState(false);

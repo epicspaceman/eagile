@@ -63,10 +63,10 @@ const TicketBoard = ({ epicId, ticketFilter }: Props) => {
     }
     return (
         <div className="grid grid-cols-4 gap-x-3">
-            <TicketColumn tickets={todoTickets} status={"todo"} epicId={epicId}/>
-            <TicketColumn tickets={blockedTickets} status={"blocked"} epicId={epicId}/>
-            <TicketColumn tickets={inProgressTickets} status={"inProgress"} epicId={epicId}/>
-            <TicketColumn tickets={completedTickets} status={"completed"} epicId={epicId}/>
+            <TicketColumn tickets={todoTickets} status={"todo"} epicId={epicId} ticketFilter={ticketFilter}/>
+            <TicketColumn tickets={blockedTickets} status={"blocked"} epicId={epicId} ticketFilter={ticketFilter}/>
+            <TicketColumn tickets={inProgressTickets} status={"inProgress"} epicId={epicId} ticketFilter={ticketFilter}/>
+            <TicketColumn tickets={completedTickets} status={"completed"} epicId={epicId} ticketFilter={ticketFilter}/>
         </div>
     )
 }
