@@ -1,15 +1,12 @@
 import { TicketFilter } from "@/app/lib/definitions"
-import { useQueryClient } from "@tanstack/react-query"
-import { Dispatch, SetStateAction } from "react"
 
 type Props = {
     defaultPriority?: string,
-    updateTicketFilter?: Function,
+    updateTicketFilter?: ({ user, priority, clearUser }: { user?: PublicUser, priority?: string, clearUser?: boolean }) => void,
     ticketFilter?: TicketFilter
 }
 
 const PrioritySelector = ({ defaultPriority, updateTicketFilter, ticketFilter }: Props ) => {
-    const queryClient = useQueryClient()
 
     return (
         <div className="flex flex-col align-center">
